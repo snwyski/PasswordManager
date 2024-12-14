@@ -9,11 +9,10 @@
 
 using namespace std;
 
-// Utility function to hash the master password using Windows CryptoAPI
 string hashPassword(const string& password) {
     HCRYPTPROV hProv = 0;
     HCRYPTHASH hHash = 0;
-    BYTE hash[32]; // SHA-256 produces a 32-byte hash
+    BYTE hash[32]; 
     DWORD hashLength = 32;
 
     if (!CryptAcquireContext(&hProv, NULL, NULL, PROV_RSA_AES, CRYPT_VERIFYCONTEXT)) {
@@ -51,7 +50,6 @@ string hashPassword(const string& password) {
     return ss.str();
 }
 
-// Save the master password hash and credentials to a file
 void saveToFile(const string& masterHash, const vector<pair<string, string>>& credentials) {
     ofstream file("passwords.dat");
     if (!file.is_open()) {
@@ -66,11 +64,10 @@ void saveToFile(const string& masterHash, const vector<pair<string, string>>& cr
     file.close();
 }
 
-// Load the master password hash and credentials from a file
 bool loadFromFile(string& masterHash, vector<pair<string, string>>& credentials) {
     ifstream file("passwords.dat");
     if (!file.is_open()) {
-        return false; // No file exists yet
+        return false; 
     }
 
     getline(file, masterHash);
@@ -87,7 +84,6 @@ bool loadFromFile(string& masterHash, vector<pair<string, string>>& credentials)
     return true;
 }
 
-// Add a new username and password
 void addCredential(vector<pair<string, string>>& credentials) {
     string username, password;
     cout << "Enter username: ";
@@ -98,7 +94,6 @@ void addCredential(vector<pair<string, string>>& credentials) {
     cout << "Credential added successfully!" << endl;
 }
 
-// Display all stored usernames and passwords
 void displayCredentials(const vector<pair<string, string>>& credentials) {
     cout << "Stored credentials:" << endl;
     for (const auto& credential : credentials) {
@@ -110,7 +105,6 @@ int main() {
     string masterHash;
     vector<pair<string, string>> credentials;
 
-    // Load existing data
     if (!loadFromFile(masterHash, credentials)) {
         cout << "No master password set. Please set a new master password: ";
         string masterPassword;
@@ -119,7 +113,6 @@ int main() {
         cout << "Master password set successfully!" << endl;
     }
 
-    // Verify master password
     while (true) {
         cout << "Enter master password to unlock the password manager: ";
         string masterPassword;
@@ -133,7 +126,6 @@ int main() {
         }
     }
 
-    // Main menu
     int choice;
     do {
         cout << "\nPassword Manager Menu:" << endl;

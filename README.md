@@ -1,2 +1,2 @@
 # PasswordManager
-simple password manager
+this is a simple password manager that i made for my first project
